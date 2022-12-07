@@ -1,18 +1,10 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import { useEffect, useState } from "react";
 
 import Main from "../components/main";
 import Footer from "../components/footer";
-import { ApiGet, IApi } from "../common/fetchApi";
 
 const Home: NextPage = () => {
-  useEffect(() => {
-    ApiGet(process.env.NEXT_PUBLIC_API_URL!).then((res: IApi) => {
-      console.log(res);
-    });
-  }, []);
-
   return (
     <>
       <Head>

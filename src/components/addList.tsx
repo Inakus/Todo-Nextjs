@@ -6,6 +6,7 @@ const AddList = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!input) return;
     ApiPost(process.env.NEXT_PUBLIC_API_URL!, { content: input });
     setInput("");
   };
@@ -13,18 +14,20 @@ const AddList = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="m-5 flex w-full items-center justify-center"
+      className="m-5 flex items-center justify-center"
     >
-      <input
-        type="text"
-        placeholder="Type here"
-        className="input-bordered input w-full max-w-xs"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-      />
-      <button type="submit" className="btn">
-        Add
-      </button>
+      <div className="input-group flex items-center justify-center">
+        <input
+          type="text"
+          placeholder="Search…"
+          className="input-bordered input"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+        />
+        <button type="submit" className="btn-square btn">
+          Add
+        </button>
+      </div>
     </form>
   );
 };
