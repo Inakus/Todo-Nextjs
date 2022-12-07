@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { ApiPost } from "../common/fetchApi";
+
+import { ApiGet, ApiPost } from "../common/fetchApi";
 
 const AddList = () => {
-  const [input, setInput] = useState("");
+  const [newInput, setNewInput] = useState("");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!input) return;
-    ApiPost(process.env.NEXT_PUBLIC_API_URL!, { content: input });
-    setInput("");
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    if (!newInput) return;
+    await ApiPost(process.env.NEXT_PUBLIC_API_URL!, { content: newInput });
+    setNewInput("");
   };
 
   return (
@@ -21,8 +21,8 @@ const AddList = () => {
           type="text"
           placeholder="Search…"
           className="input-bordered input"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
+          value={newInput}
+          onChange={(e) => setNewInput(e.target.value)}
         />
         <button type="submit" className="btn-square btn">
           Add

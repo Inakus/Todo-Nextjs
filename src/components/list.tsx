@@ -5,13 +5,19 @@ import ListItem from "./listItem";
 
 const List = (): JSX.Element => {
   const [data, setData] = useState<IApi[]>([]);
-  const [isDeleted, setIsDeleted] = useState(false);
 
   useEffect(() => {
-    ApiGet(process.env.NEXT_PUBLIC_API_URL!).then((res: IApi[]) => {
-      setData(res);
-    });
-  }, [isDeleted]);
+    const getData = async () => {
+      return await ApiGet(process.env.NEXT_PUBLIC_API_URL!).then(
+        (res: IApi[]) => {
+          setData(res);
+        }
+      );
+    };
+    getData();
+  }, []);
+
+  if (!data) return <div>Loading...</div>;
 
   return (
     <div className=" flex w-[35%] flex-col items-center justify-center">
@@ -21,9 +27,6 @@ const List = (): JSX.Element => {
           content={item.content}
           id={item._id}
           completed={item.completed}
-          isDeleted={(v: boolean) => {
-            setIsDeleted(v);
-          }}
         />
       ))}
     </div>
