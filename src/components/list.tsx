@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 
 import { ApiGet, IApi } from "../common/fetchApi";
 import ListItem from "./listItem";
+import { useDataContext } from "../common/dataContext";
 
 const List = (): JSX.Element => {
-  const [data, setData] = useState<IApi[]>([]);
+  const { data, setData } = useDataContext();
 
   useEffect(() => {
     const getData = async () => {

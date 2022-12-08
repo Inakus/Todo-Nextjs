@@ -1,13 +1,20 @@
 import { useState } from "react";
 
-import { ApiGet, ApiPost } from "../common/fetchApi";
+import { ApiPost } from "../common/fetchApi";
+import { useDataContext } from "../common/dataContext";
 
 const AddList = () => {
   const [newInput, setNewInput] = useState("");
+  const { setData } = useDataContext();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (!newInput) return;
-    await ApiPost(process.env.NEXT_PUBLIC_API_URL!, { content: newInput });
+    await ApiPost(process.env.NEXT_PUBLIC_API_URL!, { content: newInput }).then(
+      (res) => {
+        setData(res);
+      }
+    );
     setNewInput("");
   };
 

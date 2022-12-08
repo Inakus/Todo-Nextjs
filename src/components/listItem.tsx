@@ -1,5 +1,6 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { ApiDelete, ApiPut } from "../common/fetchApi";
+import { useDataContext } from "../common/dataContext";
 
 const ListItem = ({
   content,
@@ -12,15 +13,26 @@ const ListItem = ({
 }): JSX.Element => {
   const [isCompleted, setIsCompleted] = useState(completed);
 
+  const { setData } = useDataContext();
+
   const putApi = async () => {
     await ApiPut(`${process.env.NEXT_PUBLIC_API_URL!}${id}`, {
       completed: !isCompleted,
+    }).catch((err) => {
+      console.log(err);
     });
     setIsCompleted(!isCompleted);
   };
 
-  const deleteApi = async () => {
-    await ApiDelete(`${process.env.NEXT_PUBLIC_API_URL!}${id}`);
+  const deleteApi = async (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    await ApiDelete(`${process.env.NEXT_PUBLIC_API_URL!}${id}`)
+      .then((res) => {
+        setData(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
